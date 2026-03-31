@@ -153,7 +153,8 @@ class TushareFetcher(BaseFetcher):
         """
         import types
 
-        TUSHARE_API_URL = "http://api.tushare.pro"
+        # 替换为自定义的 Tushare 镜像节点地址
+        TUSHARE_API_URL = os.getenv("TUSHARE_CUSTOM_URL", "http://111.170.34.57:8010/")
         _token = token
         _timeout = getattr(self._api, '_DataApi__timeout', 30)
 
@@ -775,7 +776,7 @@ class TushareFetcher(BaseFetcher):
 
             df = df.copy()
             
-            # 1. 提取基础比对数据：最新价、昨收
+            # 1. 提取基础比现数据：最新价、昨收
             # 兼容不同接口返回的列名 sina/em efinance tushare xtdata
             code_col = next((c for c in ['代码', '股票代码', 'ts_code','stock_code'] if c in df.columns), None)
             name_col = next((c for c in ['名称', '股票名称','name','name'] if c in df.columns), None)
